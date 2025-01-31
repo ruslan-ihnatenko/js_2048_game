@@ -8,6 +8,28 @@ const scoreElement = document.querySelector('.game-score');
 const startButton = document.querySelector('.start');
 const messageContainer = document.querySelector('.message-container');
 
+// Touch Events
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
+// eslint-disable-next-line no-shadow
+document.addEventListener('touchstart', (event) => {
+  touchStartX = event.touches[0].clientX;
+  touchStartY = event.touches[0].clientY;
+});
+
+// eslint-disable-next-line no-shadow
+document.addEventListener('touchmove', (event) => {
+  touchEndX = event.touches[0].clientX;
+  touchEndY = event.touches[0].clientY;
+});
+
+document.addEventListener('touchend', () => {
+  handleSwipe();
+});
+
 /** Starts the game and initializes the board */
 startButton.addEventListener('click', () => {
   game.restart();
@@ -46,6 +68,35 @@ document.addEventListener('keydown', (event) => {
     }
   }
 });
+
+// Swipe Events
+
+function handleSwipe() {
+  const deltaX = touchEndX - touchStartX;
+  const deltaY = touchEndY - touchStartY;
+
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    if (deltaX > 0) {
+      game.moveRight();
+    } else {
+      game.moveLeft();
+    }
+  } else {
+    if (deltaY > 0) {
+      game.moveDown();
+    } else {
+      game.moveUp();
+    }
+  }
+
+  renderBoard();
+
+  if (game.checkWinCondition()) {
+    showMessage('🎉 You win! Congrats!', 'win');
+  } else if (game.checkGameOver()) {
+    showMessage('💀 Game Over! Restart the game?', 'lose');
+  }
+}
 
 /** Renders the game board based on the current state */
 function renderBoard() {
