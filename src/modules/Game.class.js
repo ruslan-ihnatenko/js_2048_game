@@ -211,9 +211,10 @@ class Game {
     }
 
     // Remove zeros again and pad the row/column with zeros
-    return filtered
-      .filter((tile) => tile !== 0)
-      .concat(new Array(4 - filtered.length).fill(0));
+    const merged = filtered.filter((tile) => tile !== 0);
+    const padding = new Array(4 - merged.length).fill(0);
+
+    return merged.concat(padding);
   }
 
   /**

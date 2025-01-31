@@ -13,6 +13,7 @@ startButton.addEventListener('click', () => {
   game.restart();
   renderBoard();
   showMessage('Game started! Good luck!', 'start');
+  toggleStartButton();
 });
 
 /** Listen for key events */
@@ -71,6 +72,14 @@ function updateCellStyle(cell, value) {
 
   if (value !== 0) {
     cell.classList.add(`field-cell--${value}`); // Apply dynamic class
+  }
+}
+
+function toggleStartButton() {
+  if (startButton.textContent === 'Start') {
+    startButton.textContent = 'Restart';
+    startButton.classList.add('restart');
+    startButton.classList.remove('start');
   }
 }
 
