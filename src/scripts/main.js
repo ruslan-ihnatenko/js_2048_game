@@ -59,15 +59,19 @@ document.addEventListener('keydown', (event) => {
   }
 
   if (moved) {
-    renderBoard();
-
-    if (game.checkWinCondition()) {
-      showMessage('🎉 You win! Congrats!', 'win');
-    } else if (game.checkGameOver()) {
-      showMessage('💀 Game Over! Restart the game?', 'lose');
-    }
+    gameUpdate();
   }
 });
+
+function gameUpdate() {
+  renderBoard();
+
+  if (game.checkWinCondition()) {
+    showMessage('🎉 You win! Congrats!', 'win');
+  } else if (game.checkGameOver()) {
+    showMessage('💀 Game Over! Restart the game?', 'lose');
+  }
+}
 
 // Swipe Events
 
@@ -89,13 +93,7 @@ function handleSwipe() {
     }
   }
 
-  renderBoard();
-
-  if (game.checkWinCondition()) {
-    showMessage('🎉 You win! Congrats!', 'win');
-  } else if (game.checkGameOver()) {
-    showMessage('💀 Game Over! Restart the game?', 'lose');
-  }
+  gameUpdate();
 }
 
 /** Renders the game board based on the current state */
